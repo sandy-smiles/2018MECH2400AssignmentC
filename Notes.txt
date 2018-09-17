@@ -1,0 +1,8 @@
+// Move right x distance
+// Start raising lift
+// Move forwards until limit swtich is triffered
+// Raise lift all the way
+// Start turning 180 degrees
+// Start lowering lift
+// Once finished turning, move left x distance
+// 
