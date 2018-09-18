@@ -15,6 +15,10 @@ void setup() {
 }
 
 void loop() {
+  // Initialise variables
+  int wheelSpeed = 10;
+  
+  
   while (TRUE) {
     drive(wheelSpeed); // Initially just try to get the robot driving in a straight line.
   }
