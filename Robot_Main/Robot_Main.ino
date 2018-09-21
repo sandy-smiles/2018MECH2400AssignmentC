@@ -1,4 +1,7 @@
 #include "DEFINE"
+#include "Drive_Subsystem"
+#include "Lift_Subsystem"
+#include <Servo.h>
 
 #define SERIAL_SPEED 9600
 
@@ -8,8 +11,8 @@ void setup() {
   
   // Initialise the servos and the other ports as input or output
   pinMode(LED, 13); // Inbuilt led onto the arduino board (from memory)
-  pinMode(WHEEL_L_T, OUTPUT);
-  pinMode(WHEEL_L_B, OUTPUT);
+  pinMode(WHEEL_L_T, OUTPUT); // Left Top
+  pinMode(WHEEL_L_B, OUTPUT); // Left Bottom
   pinMode(WHEEL_R_T, OUTPUT);
   pinMode(WHEEL_R_B, OUTPUT);
 }
