@@ -60,14 +60,10 @@ public:
 			_dlb->setSpeed(0);
 			_drt->setSpeed(0);
 			_drb->setSpeed(0);
-			break;			
+			break;	
+		return; // distance done.	
 	}
 
-
-
-
-	setSpeed() {
-	}
 };
 
 #endif // Drive_Subsystem.hpp
