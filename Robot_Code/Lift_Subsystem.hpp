@@ -10,13 +10,13 @@
 
 enum Lift_Direction { up, down, stop };
 
-class Drive_Subsystem {
+class Lift_Subsystem {
 private:
 	Motor *_m1; // Motor 1
 	Motor *_m2; // Motor 2
 
 public:
-	Drive_Subsystem::Drive_Subsystem(Motor *m1, Motor *m2) {
+	Lift_Subsystem::Lift_Subsystem(Motor *m1, Motor *m2) {
 		_m1 = m1;
 		_m2 = m2;
 		reset();

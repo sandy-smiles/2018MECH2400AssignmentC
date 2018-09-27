@@ -16,7 +16,7 @@
 #include "RobotRunner.hpp"
 #include "Drive_Subsystem.hpp"
 
-class Drive_Command: public RobotCmd {
+class Drive_Time_Command: public RobotCmd {
 private:
   Drive_Subsystem *_drive;
   Direction _dir;
@@ -24,7 +24,7 @@ private:
   int _speed;
 
 public:
-  Drive_Command::Drive_Command(Drive_Subsystem *drive, Direction dir, unsigned long time, int speed) {
+  Drive_Time_Command::Drive_Time_Command(Drive_Subsystem *drive, Direction dir, unsigned long time, int speed) {
     _drive = drive;
     _dir = dir;
     _time = time;
