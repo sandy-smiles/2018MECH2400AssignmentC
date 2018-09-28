@@ -8,7 +8,7 @@
 #ifndef _DRIVE_SUBSYSTEM_HPP
 #define _DRIVE_SUBSYSTEM_HPP
 
-enum Direction { left, right, forwards, backwards, stop };
+enum Direction { left, right, forwards, backwards, turn_left, turn_right, stop };
 
 class Drive_Subsystem {
 private:

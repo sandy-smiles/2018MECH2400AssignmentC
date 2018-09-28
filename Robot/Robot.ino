@@ -1,15 +1,18 @@
+#include <Servo.h>
+
 #include "RobotCmd.hpp"
 #include "RobotRunner.hpp"
-#include "DEFINE"
-#include "Drive_Subsystem"
-#include "Lift_Subsystem"
-#include <Servo.h>
+#include "Motor.hpp"
+#include "Wheel.hpp"
+#include "Drive_Subsystem.hpp"
+#include "Lift_Subsystem.hpp"
+#include "Drive_Time_Command.hpp"
 
 #define SERIAL_SPEED 9600
 
 RobotRunner *cmds;
 // Define Drive Subsystem
-Drive_Subsystem *driveSubsystem
+Drive_Subsystem *driveSubsystem;
 // Define Wheel Motors (Servos)
 Wheel *dlt; //drive_left_top;
 Wheel *dlb; //drive_left_bottom;
@@ -28,7 +31,7 @@ int drt_feedback = 13;
 int drb_feedback = 13;
 
 // Define Lift Subsystem
-Lift_Subsystem *liftSubsystem
+Lift_Subsystem *liftSubsystem;
 // Define Lift Motors (Servos)
 Motor *l1; //lift_servo_1;
 Motor *l2;
@@ -49,7 +52,7 @@ void setup() {
   driveSubsystem = new Drive_Subsystem(dlt, dlb, drt, drb);
   
   cmds = new RobotRunner();     // create an execution environment
-  Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, up, 20000, 90);
+  Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 20000, 90);
   //Lift_Command *cmd02 = new Lift_Command(liftSubsystem, up, 50);
 //  RobotFlashLed *rfl = new RobotFlashLed(new SubsystemLED(led1), 500);
 //  rfl->addParallel(new RobotFlashLed(new SubsystemLED(led2), 300));

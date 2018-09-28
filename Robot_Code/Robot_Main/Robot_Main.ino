@@ -1,10 +1,10 @@
+#include <Servo.h>
+/*
 #include "RobotCmd.hpp"
 #include "RobotRunner.hpp"
-#include "DEFINE"
-#include "Drive_Subsystem"
-#include "Lift_Subsystem"
-#include <Servo.h>
-
+#include "Drive_Subsystem.hpp"
+#include "Lift_Subsystem.hpp"
+*/
 #define SERIAL_SPEED 9600
 
 RobotRunner *cmds;
@@ -16,10 +16,10 @@ Wheel *dlb; //drive_left_bottom;
 Wheel *drt; //drive_right_top;
 Wheel *drb; //drive_right_bottom;
 // Define wheel control pins
-int dlt_control = 9;
-int dlb_control = 10;
-int drt_control = 11;
-int drb_control = 12;
+int dlt_control = 9
+int dlb_control = 10
+int drt_control = 11
+int drb_control = 12
 // Define wheel feedback pins
 // NOTE: Can't understand feedback so we are not using it.
 int dlt_feedback = 13;
