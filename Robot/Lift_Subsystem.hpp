@@ -1,14 +1,21 @@
+// Lift Subsystem
 /*
- * A subsystem is a wrapper class around a piece of hardware functionality.
- * It generally holds the state about a piece of hardware, and is used to manipulate the state of the hardware.
- *
- * Each piece of hardware should have its own subsystem class.
+ * Is used for driving the cascade lift that uses 2 servos running together.
+ * 
+ * Defines:
+ *  - enum Lift_Direction
+ *  - Lift_Subsystem
+ *    - void reset
+ *    - void move
+ * 
+ * TODO:
+ *  - Fix up within move, the function that pokes the servos to spin.
  */
 
 #ifndef _LIFT_SUBSYSTEM_HPP
 #define _LIFT_SUBSYSTEM_HPP
 
-enum Lift_Direction { up, down, LiftStop };
+enum Lift_Direction { up, down, lift_stop };
 
 class Lift_Subsystem {
 private:
@@ -22,6 +29,13 @@ public:
 		reset();
 	}
 
+  // reset
+  /*
+   * Input:
+   *  - None
+   * Output:
+   *  - Robot becomes stationary
+   */
 	void
 	reset() {
 		// Make motors stationary
@@ -29,7 +43,18 @@ public:
 		_m2->reset();
 	}
 
-	void
+  // move
+  /*
+   * Input:
+   *  - Direction you wish the robot to move in
+   *  - Speed of the servos.
+   * Output:
+   *  - Visible movement of robot
+   * Note:
+   *  - Cascade fall on affect has been used when programming the switch case statement.
+   *    Please note the breaks within the statement.
+   */
+  void
 	move(Lift_Direction dir, int speed) {
 		switch(dir) {
 		case up:
@@ -38,7 +63,7 @@ public:
 			_m1->setSpeed(speed);
 			_m2->setSpeed(speed); // Depend on wiring as to whether this is -speed or +speed
 			break;
-		case LiftStop:
+		case stop:
 			_m1->setSpeed(0);
 			_m2->setSpeed(0);
 			break;	

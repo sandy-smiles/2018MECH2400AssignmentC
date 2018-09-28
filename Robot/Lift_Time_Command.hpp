@@ -1,12 +1,14 @@
-// Drive_Command
+// Lift_Time_Command
 /*
- * Allows the robot to drive in the specified direction for a certain amount of time.
+ * Allows the robot to move the lift in the specified direction for the specified amount of time.
  * 
  * Input:
- *  - Time in milliseconds
+ *  - Lift Subsystem
  *  - Direction
+ *  - Time in milliseconds
+ *  - Servo Speed
  * Output:
- *  - Visible driving.
+ *  - Visible movement of the cascade lift.
  * Notes:
  *  - Time input should be more than 3 milliseconds due to capabilities of the current arduinos.
  * 
@@ -16,16 +18,16 @@
 #include "RobotRunner.hpp"
 #include "Drive_Subsystem.hpp"
 
-class Drive_Time_Command: public RobotCmd {
+class Lift_Time_Command: public RobotCmd {
 private:
-  Drive_Subsystem *_drive;
-  Direction _dir;
+  Lift_Subsystem *_lift;
+  Lift_Direction _dir;
   unsigned long _time;
   int _speed;
 
 public:
-  Drive_Time_Command::Drive_Time_Command(Drive_Subsystem *drive, Direction dir, unsigned long time, int speed) {
-    _drive = drive;
+  Lift_Time_Command(Lift_Subsystem *lift, Lift_Direction dir, unsigned long time, int speed) {
+    _lift = lift;
     _dir = dir;
     _time = time;
     _speed = speed;
@@ -42,11 +44,11 @@ public:
       return true;
     }
 
-    _drive->drive(_dir, _speed);
+    _lift->move(_dir, _speed);
     return false;
   }
 
   void end() {
-    _drive->drive(stop, 0);
+    _lift->move(lift_stop, 0);
   }
 };

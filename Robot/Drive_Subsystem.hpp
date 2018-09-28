@@ -1,8 +1,12 @@
+// Drive Subsystem
 /*
- * A subsystem is a wrapper class around a piece of hardware functionality.
- * It generally holds the state about a piece of hardware, and is used to manipulate the state of the hardware.
- *
- * Each piece of hardware should have its own subsystem class.
+ * Is used for driving the chassis
+ * 
+ * Defines:
+ *  - enum Direction
+ *  - Drive_Subsystem
+ *    - void reset
+ *    - void drive
  */
 
 #ifndef _DRIVE_SUBSYSTEM_HPP
@@ -27,6 +31,13 @@ public:
 		reset();
 	}
 
+  // reset
+  /*
+   * Input:
+   *  - None
+   * Output:
+   *  - Robot becomes stationary
+   */
 	void
 	reset() {
 		// Make robot stationary
@@ -36,8 +47,20 @@ public:
 		_drb->reset();
 	}
 
+  // drive
+  /*
+   * Input:
+   *  - Direction you wish the robot to move in
+   *  - Speed of the servos.
+   * Output:
+   *  - Visible movement of robot
+   * Note:
+   *  - Cascade fall on affect has been used when programming the switch case statement.
+   *    Please note the breaks within the statement.
+   */
 	void
 	drive(Direction dir, int speed) {
+    // speed = -speed; // If everything is around the wrong way, please uncomment this line.
 		switch(dir) {
 		case left:
 			speed = -speed;
@@ -55,6 +78,14 @@ public:
 			_drt->setSpeed(-speed);
 			_drb->setSpeed(-speed);
 			break;
+    case turn_left:
+      speed = -speed;
+    case turn_right:
+      _dlt->setSpeed(speed);
+      _dlb->setSpeed(speed);
+      _drt->setSpeed(speed);
+      _drb->setSpeed(speed);
+      break;
 		case stop:
 			_dlt->setSpeed(0);
 			_dlb->setSpeed(0);

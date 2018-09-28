@@ -1,10 +1,12 @@
-// Drive_Command
+// Drive_Time_Command
 /*
- * Allows the robot to drive in the specified direction for a certain amount of time.
+ * Allows the robot to drive in the specified direction for the specified amount of time.
  * 
  * Input:
- *  - Time in milliseconds
+ *  - Drive Subsystem
  *  - Direction
+ *  - Time in milliseconds
+ *  - Servo Speed
  * Output:
  *  - Visible driving.
  * Notes:

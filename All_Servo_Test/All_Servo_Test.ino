@@ -18,6 +18,11 @@ int dlb_feedback = 13;
 int drt_feedback = 13;
 int drb_feedback = 13;
 
+// Servo speed is where 0 is full speed ____-clockwise, 90 is stopped, and 180 is full speed ____-clockwise
+int servo_full_speed = 0;
+int servo_looks_like_full_speed = 70;
+int servo_slow_speed = 85;
+int servo_stop_speed = 90;
 
 void setup() {
   // Setup communications back to computer for testing.
@@ -30,11 +35,10 @@ void setup() {
   dlb.attach(dlb_control);
   drt.attach(drt_control);
   drb.attach(drb_control);
-  pinMode(13, INPUT_PULLUP);
   
   
   Serial.print("Moving now\n\n");
-  int speed = 70;
+  int speed = servo_looks_like_full_speed;
   dlt.write(speed);
   dlb.write(speed);
   drt.write(speed);
@@ -69,7 +73,8 @@ void loop() {
   */
 }
 
-
+// Function gotten off the internet to figure out where the sensor is in terms of angle through the revolution.
+// Has a really slow sampling speed and thus is not of much use.
 float readPos(int pwmPin)
 {
  int tHigh;
@@ -94,5 +99,3 @@ float readPos(int pwmPin)
  theta = ((dc - dcMin) * unitsFC) / (dcMax - dcMin);
  return theta;
 }
-
-

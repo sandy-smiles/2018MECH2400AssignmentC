@@ -6,7 +6,12 @@
 #include "Wheel.hpp"
 #include "Drive_Subsystem.hpp"
 #include "Lift_Subsystem.hpp"
+#include "Drive_Distance_Command.hpp"
+#include "Drive_Sensor_Command.hpp"
 #include "Drive_Time_Command.hpp"
+#include "Lift_Sensor_Command.hpp"
+#include "Lift_Time_Command.hpp"
+#include "Sensor_Command.hpp"
 
 #define SERIAL_SPEED 9600
 
@@ -39,6 +44,9 @@ Motor *l2;
 int l1_control = 5;
 int l2_control = 6;
 
+// Define Sensor pins
+int start_pin = 13;
+
 void setup() {
   
   l1 = new Motor(l1_control);
@@ -52,20 +60,27 @@ void setup() {
   driveSubsystem = new Drive_Subsystem(dlt, dlb, drt, drb);
   
   cmds = new RobotRunner();     // create an execution environment
+
+  // Define all of the commands before structuring it into a command tree.
+  Sensor_Command *startCommand = new Sensor_Command(start_pin, false);
   Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 20000, 90);
-  //Lift_Command *cmd02 = new Lift_Command(liftSubsystem, up, 50);
-//  RobotFlashLed *rfl = new RobotFlashLed(new SubsystemLED(led1), 500);
-//  rfl->addParallel(new RobotFlashLed(new SubsystemLED(led2), 300));
+//Lift_Command *cmd02 = new Lift_Command(liftSubsystem, up, 50);
+//RobotFlashLed *rfl = new RobotFlashLed(new SubsystemLED(led1), 500);
+//rfl->addParallel(new RobotFlashLed(new SubsystemLED(led2), 300));
+
   
-  // Build up command tree from the first command
+  // When creating commands, you want to create the structure of a massive tree that can branch into two.
+  // Build up command tree from the first command.
+  startCommand->addSequential(cmd01);
   //cmd01->addParallel(cmd02);
   //cmd01->addSequential(cmd03);
-//  cmds->add(rfl);
-//  cmds->setParallelActive(rfl);
 
-  // After commands, then add all of the command tree to register to run
-  cmds->add(cmd01);
-  cmds-> setParallelActive(cmd01); // Sets top commands active and then flows through the tree
+  
+  // After commands, then add all of the command tree to register to run.
+//cmds->add(rfl);
+//cmds->setParallelActive(rfl);
+  cmds->add(startCommand);
+  cmds-> setParallelActive(startCommand); // Sets top commands active and then flows through the tree
 }
 
 void loop() {

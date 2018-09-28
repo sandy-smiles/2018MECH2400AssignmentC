@@ -3,36 +3,36 @@
 #define SERIAL_SPEED 9600
 
 Servo myS;
+int servo_pin = 12;
+// Servo speed is where 0 is full speed ____-clockwise, 90 is stopped, and 180 is full speed ____-clockwise
+int servo_full_speed = 0;
+int servo_slow_speed = 85;
+int servo_stop_speed = 90;
+
+int switch_pin = 13;
 
 void setup() {
   // Setup communications back to computer for testing.
   Serial.begin(SERIAL_SPEED);
-  myS.attach(12);
-  myS.write(90); // Stop servo
-  pinMode(13, INPUT_PULLUP);
+  myS.attach(servo_pin);
+  myS.write(servo_stop_speed); // Stop servo
+  pinMode(switch_pin, INPUT_PULLUP);
 }
 
 void loop() {
   // Initialise variables
   
   Serial.print("Moving now\n\n");
-  myS.write(85); // Initially just try to get the robot driving in a straight line.
-  /*delay(5000);
-  Serial.print("\tStopping now\n\n");
-  myS.write(map(0, -1, 1, 0, 180)); // Initially just try to get the robot driving in a straight line.
-  delay(2000);
-  myS.write(180);
-  delay(2000);
-  myS.write(90); // Initially just try to get the robot driving in a straight line.
-  delay(2000);
-  */
-  float sensed = readPos(13);
+  myS.write(servo_slow_speed); // Initially just try to get the robot driving in a straight line.
+  
+  float sensed = readPos(switch_pin);
   Serial.print("Sensor is showing ");
   Serial.println(sensed);
-  //delay(1500);
+  //delay(1500); // Lets there be a waiting period between sampling.
 }
 
-
+// Function gotten off the internet to figure out where the sensor is in terms of angle through the revolution.
+// Has a really slow sampling speed and thus is not of much use.
 float readPos(int pwmPin)
 {
  int tHigh;
@@ -57,5 +57,3 @@ float readPos(int pwmPin)
  theta = ((dc - dcMin) * unitsFC) / (dcMax - dcMin);
  return theta;
 }
-
-

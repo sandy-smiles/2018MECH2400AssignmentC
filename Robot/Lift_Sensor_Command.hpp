@@ -1,16 +1,16 @@
-// Drive_Sensor_Command
+// Lift_Sensor_Command
 /*
- * Allows the robot to drive in the specified direction until a specified sensor is pressed.
+ * Allows the robot to move the lift in the specified direction funtil a specified sensor is pressed.
  * 
  * Input:
- *  - Drive Subsystem
+ *  - Lift Subsystem
  *  - Direction
- *  - Sensor pin
- *  - Sensor state
+ *  - Time in milliseconds
  *  - Servo Speed
  * Output:
- *  - Visible driving.
+ *  - Visible movement of the cascade lift.
  * Notes:
+ *  - Time input should be more than 3 milliseconds due to capabilities of the current arduinos.
  * 
  */
 
@@ -20,17 +20,17 @@
 
 // #define SENSOR_PRESSED 0
 
-class Drive_Sensor_Command: public RobotCmd {
+class Lift_Sensor_Command: public RobotCmd {
 private:
-  Drive_Subsystem *_drive;
-  Direction _dir;
+  Lift_Subsystem *_lift;
+  Lift_Direction _dir;
   int _sensor_pin;
   bool _sensor_state;
   int _speed;
 
 public:
-  Drive_Sensor_Command(Drive_Subsystem *drive, Direction dir, int sensor_pin, bool sensor_state, int speed) {
-    _drive = drive;
+  Lift_Sensor_Command(Lift_Subsystem *lift, Lift_Direction dir, int sensor_pin, bool sensor_state, int speed) {
+    _lift = lift;
     _dir = dir;
     _sensor_pin = sensor_pin;
     _sensor_state = sensor_state;
@@ -48,11 +48,11 @@ public:
       return true; // End the Command
     }
 
-    _drive->drive(_dir, _speed);
+    _lift->move(_dir, _speed);
     return false;
   }
 
   void end() {
-    _drive->drive(stop, 0);
+    _lift->move(lift_stop, 0);
   }
 };

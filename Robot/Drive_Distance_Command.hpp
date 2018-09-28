@@ -1,14 +1,15 @@
-// Drive_Command
+// Drive_Distance_Command (Does not work, do not use)
 /*
- * Allows the robot to drive in the specified direction for a certain amount of time.
+ * Allows the robot to drive in the specified direction for a specified distance.
  * 
  * Input:
- *  - Time in milliseconds
+ *  - Drive Subsystem
  *  - Direction
+ *  - Distance
+ *  - Servo Speed
  * Output:
  *  - Visible driving.
  * Notes:
- *  - Time input should be more than 3 milliseconds due to capabilities of the current arduinos.
  * 
  */
 
@@ -16,7 +17,7 @@
 #include "RobotRunner.hpp"
 #include "Drive_Subsystem.hpp"
 
-class Drive_Command: public RobotCmd {
+class Drive_Distance_Command: public RobotCmd {
 private:
   Drive_Subsystem *_drive;
   Direction _dir;
@@ -24,7 +25,7 @@ private:
   int _speed;
 
 public:
-  Drive_Distance_Command::Drive_Distance_Command(Drive_Subsystem *drive, Direction dir, unsigned long dist, int speed) {
+  Drive_Distance_Command(Drive_Subsystem *drive, Direction dir, unsigned long dist, int speed) {
     _drive = drive;
     _dir = dir;
     _dist = dist;
