@@ -96,6 +96,20 @@ public:
 		}
 	}
 
+  // calculateDist (STUB)
+  /*
+   * Input:
+   *  - None
+   * Output:
+   *  - Distance robot has travelled.
+   * Note:
+   *  - THIS IS A STUB. DO NOT USE THIS FUNCTION OR IF IT IS USED. DO NOT USE THAT COMMAND.
+   */
+  unsigned long
+  calculateDist() {
+    return 0;
+  }
+
 };
 
 #endif // Drive_Subsystem.hpp

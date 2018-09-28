@@ -36,7 +36,7 @@ public:
   }
 
   bool execute() {
-    unsigned long curDist = _drive->; // TODO Think about how to include a function in the subsystem that calculates the distance that we have travelled.
+    unsigned long curDist = _drive->calculateDist(); // TODO Think about how to include a function in the subsystem that calculates the distance that we have travelled.
 
     if (curDist > _dist) {
       return true;
