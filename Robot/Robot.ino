@@ -14,6 +14,7 @@
 #include "Sensor_Command.hpp"
 
 #define SERIAL_SPEED 9600
+#define SENSOR_PRESSED 0
 
 RobotRunner *cmds;
 // Define Drive Subsystem
@@ -30,10 +31,10 @@ int drt_control = 11;
 int drb_control = 12;
 // Define wheel feedback pins
 // NOTE: Can't understand feedback so we are not using it.
-int dlt_feedback = 13;
-int dlb_feedback = 13;
-int drt_feedback = 13;
-int drb_feedback = 13;
+int dlt_feedback = 23;
+int dlb_feedback = 25;
+int drt_feedback = 27;
+int drb_feedback = 29;
 
 // Define Lift Subsystem
 Lift_Subsystem *liftSubsystem;
@@ -63,7 +64,9 @@ void setup() {
 
   // Define all of the commands before structuring it into a command tree.
   Sensor_Command *startCommand = new Sensor_Command(start_pin, false);
-  Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 20000, 90);
+  Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 2000, 90);
+  Drive_Sensor_Command *cmd02 = new Drive_Sensor_Command(driveSubsystem, backwards, start_pin, SENSOR_PRESSED, 90);
+  Drive_Time_Command *stopCommand = new Drive_Time_Command(driveSubsystem, forwards, 10000, 0);
 //Lift_Command *cmd02 = new Lift_Command(liftSubsystem, up, 50);
 //RobotFlashLed *rfl = new RobotFlashLed(new SubsystemLED(led1), 500);
 //rfl->addParallel(new RobotFlashLed(new SubsystemLED(led2), 300));
@@ -74,6 +77,8 @@ void setup() {
   startCommand->addSequential(cmd01);
   //cmd01->addParallel(cmd02);
   //cmd01->addSequential(cmd03);
+  cmd01->addSequential(cmd02);
+  cmd02->addSequential(stopCommand);
 
   
   // After commands, then add all of the command tree to register to run.
