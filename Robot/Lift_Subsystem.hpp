@@ -61,7 +61,7 @@ public:
 			speed = -speed;
 		case down:
 			_m1->setSpeed(speed);
-			_m2->setSpeed(speed); // Depend on wiring as to whether this is -speed or +speed
+			_m2->setSpeed(-speed); // Depend on wiring as to whether this is -speed or +speed
 			break;
 		case stop:
 			_m1->setSpeed(0);
