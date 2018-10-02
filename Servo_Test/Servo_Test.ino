@@ -33,6 +33,7 @@ void loop() {
 
 // Function gotten off the internet to figure out where the sensor is in terms of angle through the revolution.
 // Has a really slow sampling speed and thus is not of much use.
+// http://forum.arduino.cc/index.php?topic=524993.5
 float readPos(int pwmPin)
 {
  int tHigh;

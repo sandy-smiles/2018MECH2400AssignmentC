@@ -63,7 +63,7 @@ public:
 			_m1->setSpeed(speed);
 			_m2->setSpeed(-speed); // Depend on wiring as to whether this is -speed or +speed
 			break;
-		case stop:
+		case lift_stop:
 			_m1->setSpeed(0);
 			_m2->setSpeed(0);
 			break;	

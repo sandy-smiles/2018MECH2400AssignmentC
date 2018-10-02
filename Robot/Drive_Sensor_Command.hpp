@@ -53,6 +53,6 @@ public:
   }
 
   void end() {
-    _drive->drive(stop, 0);
+    _drive->drive(drive_stop, 0);
   }
 };

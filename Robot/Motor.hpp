@@ -57,7 +57,7 @@ public:
    */
 	Motor *
 	setSpeed(int speed) {
-		_speed = speed;
+    _speed = mapSpeed(speed);
 		_motor.write(_speed);
 		return this;
 	}

@@ -64,10 +64,15 @@ void setup() {
 
   // Define all of the commands before structuring it into a command tree.
   Sensor_Command *startCommand = new Sensor_Command(start_pin, false);
+  
   Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 2000, 90);
   Drive_Sensor_Command *cmd02 = new Drive_Sensor_Command(driveSubsystem, backwards, start_pin, SENSOR_PRESSED, 90);
-  Drive_Time_Command *stopCommand = new Drive_Time_Command(driveSubsystem, forwards, 10000, 0);
-//Lift_Command *cmd02 = new Lift_Command(liftSubsystem, up, 50);
+  Lift_Sensor_Command *cmd03 = new Lift_Sensor_Command(liftSubsystem, up, start_pin, SENSOR_PRESSED, 90);
+
+  Drive_Time_Command *driveStopCommand = new Drive_Time_Command(driveSubsystem, drive_stop, 10000, 0);
+  Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
+  
+  
 //RobotFlashLed *rfl = new RobotFlashLed(new SubsystemLED(led1), 500);
 //rfl->addParallel(new RobotFlashLed(new SubsystemLED(led2), 300));
 
@@ -75,17 +80,23 @@ void setup() {
   // When creating commands, you want to create the structure of a massive tree that can branch into two.
   // Build up command tree from the first command.
   startCommand->addSequential(cmd01);
-  //cmd01->addParallel(cmd02);
-  //cmd01->addSequential(cmd03);
   cmd01->addSequential(cmd02);
-  cmd02->addSequential(stopCommand);
+  cmd02->addParallel(cmd03);
+  cmd02->addSequential(driveStopCommand);
+  cmd03->addSequential(liftStopCommand);
+
+// Start on limit switch press/trigger
+// Drive forwards for a little bit
+// Start lifting the lift at the same as driving forwards more.
+// Turn left on the spot
+// 
 
   
   // After commands, then add all of the command tree to register to run.
 //cmds->add(rfl);
 //cmds->setParallelActive(rfl);
   cmds->add(startCommand);
-  cmds-> setParallelActive(startCommand); // Sets top commands active and then flows through the tree
+  cmds->setParallelActive(startCommand); // Sets top commands active and then flows through the tree
 }
 
 void loop() {

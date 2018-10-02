@@ -12,7 +12,7 @@
 #ifndef _DRIVE_SUBSYSTEM_HPP
 #define _DRIVE_SUBSYSTEM_HPP
 
-enum Direction { left, right, forwards, backwards, turn_left, turn_right, stop };
+enum Direction { left, right, forwards, backwards, turn_left, turn_right, drive_stop };
 
 class Drive_Subsystem {
 private:
@@ -86,7 +86,7 @@ public:
       _drt->setSpeed(speed);
       _drb->setSpeed(speed);
       break;
-		case stop:
+		case drive_stop:
 			_dlt->setSpeed(0);
 			_dlb->setSpeed(0);
 			_drt->setSpeed(0);
