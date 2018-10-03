@@ -31,10 +31,10 @@ int drt_control = 11;
 int drb_control = 12;
 // Define wheel feedback pins
 // NOTE: Can't understand feedback so we are not using it.
-int dlt_feedback = 23;
-int dlb_feedback = 25;
-int drt_feedback = 27;
-int drb_feedback = 29;
+int dlt_feedback = 3;
+int dlb_feedback = 4;
+int drt_feedback = 5;
+int drb_feedback = 6;
 
 // Define Lift Subsystem
 Lift_Subsystem *liftSubsystem;
@@ -42,13 +42,14 @@ Lift_Subsystem *liftSubsystem;
 Motor *l1; //lift_servo_1;
 Motor *l2;
 // Define lift control pins
-int l1_control = 5;
-int l2_control = 6;
+int l1_control = 7;
+int l2_control = 8;
 
 // Define Sensor pins
 int start_pin = 13;
 
 void setup() {
+  Serial.begin(SERIAL_SPEED);
   
   l1 = new Motor(l1_control);
   l2 = new Motor(l2_control);
@@ -63,12 +64,10 @@ void setup() {
   cmds = new RobotRunner();     // create an execution environment
 
   // Define all of the commands before structuring it into a command tree.
-  Sensor_Command *startCommand = new Sensor_Command(start_pin, false);
-  
+  Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED);
   Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 2000, 90);
-  Drive_Sensor_Command *cmd02 = new Drive_Sensor_Command(driveSubsystem, backwards, start_pin, SENSOR_PRESSED, 90);
-  Lift_Sensor_Command *cmd03 = new Lift_Sensor_Command(liftSubsystem, up, start_pin, SENSOR_PRESSED, 90);
-
+  Lift_Time_Command *cmd03 = new Lift_Time_Command(liftSubsystem, up, 2000, 90);
+  Lift_Sensor_Command *cmd04 = new Lift_Sensor_Command(liftSubsystem, up, start_pin, SENSOR_PRESSED, 90);
   Drive_Time_Command *driveStopCommand = new Drive_Time_Command(driveSubsystem, drive_stop, 10000, 0);
   Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
   
@@ -79,11 +78,13 @@ void setup() {
   
   // When creating commands, you want to create the structure of a massive tree that can branch into two.
   // Build up command tree from the first command.
+ 
   startCommand->addSequential(cmd01);
-  cmd01->addSequential(cmd02);
-  cmd02->addParallel(cmd03);
-  cmd02->addSequential(driveStopCommand);
-  cmd03->addSequential(liftStopCommand);
+  cmd01->addParallel(cmd03);
+  cmd03->addSequential(cmd04);
+  cmd01->addSequential(driveStopCommand);
+  cmd04->addSequential(liftStopCommand);
+  
 
 // Start on limit switch press/trigger
 // Drive forwards for a little bit
@@ -93,9 +94,9 @@ void setup() {
 
   
   // After commands, then add all of the command tree to register to run.
-//cmds->add(rfl);
-//cmds->setParallelActive(rfl);
+  Serial.println("Starting Robot Code now!");
   cmds->add(startCommand);
+  Serial.println("Activating Commands!");
   cmds->setParallelActive(startCommand); // Sets top commands active and then flows through the tree
 }
 

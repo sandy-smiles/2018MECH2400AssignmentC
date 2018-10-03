@@ -37,7 +37,7 @@ private:
     } else if (speed < SPEED_MIN) {
       speed = SPEED_MIN;
     }
-    return (int)map(speed, SPEED_MIN, SPEED_MAX, 0, 180);
+    return (int)map(speed, SPEED_MIN, SPEED_MAX, 180, 0);
   }
 
 public:

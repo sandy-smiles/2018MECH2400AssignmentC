@@ -11,6 +11,7 @@
 
 #ifndef _DRIVE_SUBSYSTEM_HPP
 #define _DRIVE_SUBSYSTEM_HPP
+#define SPEED_TOLERANCE_CHANGE 0
 
 enum Direction { left, right, forwards, backwards, turn_left, turn_right, drive_stop };
 
@@ -19,7 +20,7 @@ private:
 	Wheel *_dlt; //drive_left_top;
 	Wheel *_dlb; //drive_left_bottom;
 	Wheel *_drt; //drive_right_top;
-	Wheel *_drb; //drive_right_bottom;
+	Wheel *_drb; //drive_right_bottom;  
 
 public:
 	Drive_Subsystem(Wheel *dlt, Wheel *dlb, Wheel *drt, Wheel *drb) {
@@ -96,18 +97,20 @@ public:
 		}
 	}
 
-  // calculateDist (STUB)
+  // speedControl
   /*
    * Input:
    *  - None
    * Output:
-   *  - Distance robot has travelled.
+   *  - None
+   * Side Effects:
+   *  - Changes 
    * Note:
    *  - THIS IS A STUB. DO NOT USE THIS FUNCTION OR IF IT IS USED. DO NOT USE THAT COMMAND.
    */
-  unsigned long
-  calculateDist() {
-    return 0;
+  void
+  speedControl() {
+    //return 0;
   }
 
 };

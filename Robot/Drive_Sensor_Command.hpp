@@ -38,6 +38,7 @@ public:
   }
   
   void initialise() {
+    Serial.println("Initialising Drive_Sensor_Command\n");
     pinMode(_sensor_pin, INPUT_PULLUP);	// Use the pin's internal pull up resistor.
   }
 

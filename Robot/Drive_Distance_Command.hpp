@@ -33,10 +33,12 @@ public:
   }
   
   void initialise() {
+    Serial.println("Initialising Drive_Distance_Command\n");
   }
 
   bool execute() {
-    unsigned long curDist = _drive->calculateDist(); // TODO Think about how to include a function in the subsystem that calculates the distance that we have travelled.
+    unsigned long curDist = 0;
+    //_drive->speedControl(); // TODO Think about how to include a function in the subsystem that calculates the distance that we have travelled.
 
     if (curDist > _dist) {
       return true;

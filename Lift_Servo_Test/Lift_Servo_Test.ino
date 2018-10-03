@@ -7,8 +7,8 @@ Servo servoA;
 Servo servoB;
 
 // Define servo control pins as variables so that they can be changed.
-int servoA_control = 9;
-int servo_control = 10;
+int servoA_control = 7;
+int servoB_control = 8;
 
 // Different servo speeds where 0 is full speed ____-clockwise, 90 is stopped, and 180 is full speed ____-clockwise
 int servo_full_speed = 0;
@@ -20,13 +20,13 @@ void setup() {
   // Setup communications back to computer for testing.
   Serial.begin(SERIAL_SPEED);
   Serial.println("Setting the Servo control pins to be output.");
-  pinMode(servoA, OUTPUT);
-  pinMode(servoB, OUTPUT);
+  pinMode(servoA_control, OUTPUT);
+  pinMode(servoB_control, OUTPUT);
   servoA.attach(servoA_control);
   servoB.attach(servoB_control);
   
-  
-  int speed = servo_looks_like_full_speed;
+  // Driving lift downwards currently.
+  int speed = 75;
   Serial.print("Writing to the servos speed");
   Serial.println(speed);
   servoA.write(speed);

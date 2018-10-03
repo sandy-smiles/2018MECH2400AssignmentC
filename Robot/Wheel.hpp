@@ -26,7 +26,7 @@ private:
 	int _speed;
 	int _control_pin;
 	int _feedback_pin;
-  int _start_pos;
+  int _start_angle;
 	int _current_pos;
 	int _current_rev;
   int _current_angle;
@@ -72,7 +72,7 @@ private:
      tHigh = pulseIn(pwmPin, HIGH);
      tLow =  pulseIn(pwmPin, LOW);
      tCycle = tHigh + tLow;
-     if ((tCycle > 1000) && ( tCycle < 1200)) break;
+     if ((tCycle > 1000) && ( tCycle < 1200)) break; // if ((tCycle > 1050) && ( tCycle < 1150)) break;
    }
   
    dc = (dutyScale * tHigh) / tCycle;
@@ -118,7 +118,7 @@ public:
 		_current_rev = 0;
     _current_angle = 0;
 		_wheel.write(mapSpeed(0));
-    _start_pos = readPos(_feedback_pin);
+    _start_angle = readPos(_feedback_pin);
 		return this;
 	}
 
