@@ -7,6 +7,8 @@
  *  - Lift_Subsystem
  *    - void reset
  *    - void move
+ * Notes:
+ *  - Different servo speeds where 0 is full speed up, 90 is stopped, and 180 is full speed down
  * 
  * TODO:
  *  - Fix up within move, the function that pokes the servos to spin.

@@ -10,7 +10,7 @@ Servo servoB;
 int servoA_control = 7;
 int servoB_control = 8;
 
-// Different servo speeds where 0 is full speed ____-clockwise, 90 is stopped, and 180 is full speed ____-clockwise
+// Different servo speeds where 0 is full speed up, 90 is stopped, and 180 is full speed down
 int servo_full_speed = 0;
 int servo_looks_like_full_speed = 70;
 int servo_slow_speed = 85;
@@ -26,7 +26,7 @@ void setup() {
   servoB.attach(servoB_control);
   
   // Driving lift downwards currently.
-  int speed = 75;
+  int speed = 90;
   Serial.print("Writing to the servos speed");
   Serial.println(speed);
   servoA.write(speed);
