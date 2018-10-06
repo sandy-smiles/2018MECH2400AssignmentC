@@ -14,8 +14,8 @@
 
 #include <Servo.h>
 
-#define SPEED_MAX 90
-#define SPEED_MIN -90
+#define MOTOR_SPEED_MAX 90
+#define MOTOR_SPEED_MIN -90
 
 class Motor {
 private:
@@ -32,12 +32,12 @@ private:
    */
   int
   mapSpeed(int speed) {
-    if (speed > SPEED_MAX) {
-      speed = SPEED_MAX;
-    } else if (speed < SPEED_MIN) {
-      speed = SPEED_MIN;
+    if (speed > MOTOR_SPEED_MAX) {
+      speed = MOTOR_SPEED_MAX;
+    } else if (speed < MOTOR_SPEED_MIN) {
+      speed = MOTOR_SPEED_MIN;
     }
-    return (int)map(speed, SPEED_MIN, SPEED_MAX, 180, 0);
+    return (int)map(speed, MOTOR_SPEED_MIN, MOTOR_SPEED_MAX, 180, 0);
   }
 
 public:

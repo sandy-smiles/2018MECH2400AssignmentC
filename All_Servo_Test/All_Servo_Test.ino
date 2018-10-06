@@ -13,10 +13,10 @@ int drt_control = 11;
 int drb_control = 12;
 // Define wheel feedback pins
 // NOTE: Can't understand feedback so we are not using it.
-int dlt_feedback = 13;
-int dlb_feedback = 13;
-int drt_feedback = 13;
-int drb_feedback = 13;
+int dlt_feedback = 3;
+int dlb_feedback = 4;
+int drt_feedback = 5;
+int drb_feedback = 6;
 
 // Servo speed is where 0 is full speed ____-clockwise, 90 is stopped, and 180 is full speed ____-clockwise
 int servo_full_speed = 0;

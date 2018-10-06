@@ -32,7 +32,7 @@ int drb_control = 12;
 // Define wheel feedback pins
 // NOTE: Can't understand feedback so we are not using it.
 int dlt_feedback = 3;
-int dlb_feedback = 4;
+int dlb_feedback = 2;
 int drt_feedback = 5;
 int drb_feedback = 6;
 
@@ -72,20 +72,36 @@ void setup() {
   cmds = new RobotRunner();     // create an execution environment
 
   // Define all of the commands before structuring it into a command tree.
-  //Lift Program
+  /* //Lift Program
+  Lift_Direction _dir = down;
+  int _s = 75;
   Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED);
-  Lift_Time_Command *cmd01 = new Lift_Time_Command(liftSubsystem, up, 2000, 90);
-  Lift_Sensor_Command *cmd02 = new Lift_Sensor_Command(liftSubsystem, up, start_pin, SENSOR_PRESSED, 90);
+  Lift_Time_Command *cmd01 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s);
+  Lift_Sensor_Command *cmd02 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel up
+  Lift_Time_Command *cmd03 = new Lift_Time_Command(liftSubsystem, lift_stop, 500, 0);
+  Lift_Sensor_Command *cmd04 = new Lift_Sensor_Command(liftSubsystem, lift_stop, start_pin, SENSOR_PRESSED, 0); // Stop lifts
+  Lift_Time_Command *cmd05 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s);
+  Lift_Sensor_Command *cmd06 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel down
+  Lift_Time_Command *cmd07 = new Lift_Time_Command(liftSubsystem, lift_stop, 500, 0);
+  Lift_Sensor_Command *cmd08 = new Lift_Sensor_Command(liftSubsystem, lift_stop, start_pin, SENSOR_PRESSED, 0); // Stop lifts
+  Lift_Time_Command *cmd09 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s);
+  Lift_Sensor_Command *cmd10 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel down
+  Lift_Time_Command *cmd11 = new Lift_Time_Command(liftSubsystem, lift_stop, 500, 0);
+  Lift_Sensor_Command *cmd12 = new Lift_Sensor_Command(liftSubsystem, lift_stop, start_pin, SENSOR_PRESSED, 0); // Stop lifts
+  Lift_Time_Command *cmd13 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s );
+  Lift_Sensor_Command *cmd14 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel down
   Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
+  */  
   
-  /* //Parallel Program
+   //Parallel Program
+  int _s = 1000;
   Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED);
-  Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 2000, 90);
-  Lift_Time_Command *cmd03 = new Lift_Time_Command(liftSubsystem, up, 2000, 90);
-  Lift_Sensor_Command *cmd04 = new Lift_Sensor_Command(liftSubsystem, up, start_pin, SENSOR_PRESSED, 90);
+  Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 5000, _s);
+  Lift_Time_Command *cmd03 = new Lift_Time_Command(liftSubsystem, up, 2000, _s);
+  Lift_Sensor_Command *cmd04 = new Lift_Sensor_Command(liftSubsystem, up, start_pin, SENSOR_PRESSED, _s);
   Drive_Time_Command *driveStopCommand = new Drive_Time_Command(driveSubsystem, drive_stop, 10000, 0);
   Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
-  */
+  
   
 //RobotFlashLed *rfl = new RobotFlashLed(new SubsystemLED(led1), 500);
 //rfl->addParallel(new RobotFlashLed(new SubsystemLED(led2), 300));
@@ -93,18 +109,31 @@ void setup() {
   
   // When creating commands, you want to create the structure of a massive tree that can branch into two.
   // Build up command tree from the first command.
-  //Lift Program
+  /* //Lift Program
   startCommand->addSequential(cmd01);
   cmd01->addSequential(cmd02);
-  cmd02->addSequential(liftStopCommand);
+  cmd02->addSequential(cmd03);
+  cmd03->addSequential(cmd04);
+  cmd04->addSequential(cmd05);
+  cmd05->addSequential(cmd06);
+  cmd06->addSequential(cmd07);
+  cmd07->addSequential(cmd08);
+  cmd08->addSequential(cmd09);
+  cmd09->addSequential(cmd10);
+  cmd10->addSequential(cmd11);
+  cmd11->addSequential(cmd12);
+  cmd12->addSequential(cmd13);
+  cmd13->addSequential(cmd14);
+  cmd14->addSequential(liftStopCommand);
+  */
   
- /* //Parallel Program
+   //Parallel Program
   startCommand->addSequential(cmd01);
   cmd01->addParallel(cmd03);
   cmd03->addSequential(cmd04);
   cmd01->addSequential(driveStopCommand);
   cmd04->addSequential(liftStopCommand);
-  */
+  
 
 // Start on limit switch press/trigger
 // Drive forwards for a little bit

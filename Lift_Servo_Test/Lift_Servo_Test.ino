@@ -26,7 +26,7 @@ void setup() {
   servoB.attach(servoB_control);
   
   // Driving lift downwards currently.
-  int speed = 90;
+  int speed = 75;
   Serial.print("Writing to the servos speed");
   Serial.println(speed);
   servoA.write(speed);

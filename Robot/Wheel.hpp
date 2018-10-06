@@ -16,8 +16,8 @@
 
 #include <Servo.h>
 
-#define SPEED_MAX 90
-#define SPEED_MIN -90
+#define WHEEL_SPEED_MAX 1000
+#define WHEEL_SPEED_MIN -1000
 #define REV_DEGREES 360
 
 class Wheel {
@@ -26,7 +26,7 @@ private:
 	int _speed;
 	int _control_pin;
 	int _feedback_pin;
-  int _start_angle;
+  int _start_angle = 0;
 	int _current_pos;
 	int _current_rev;
   int _current_angle;
@@ -40,12 +40,12 @@ private:
    */
 	int
 	mapSpeed(int speed) {
-		if (speed > SPEED_MAX) {
-			speed = SPEED_MAX;
-		} else if (speed < SPEED_MIN) {
-			speed = SPEED_MIN;
+		if (speed > WHEEL_SPEED_MAX) {
+			speed = WHEEL_SPEED_MAX;
+		} else if (speed < WHEEL_SPEED_MIN) {
+			speed = WHEEL_SPEED_MIN;
 		}
-		return (int)map(speed, SPEED_MIN, SPEED_MAX, 0, 180);
+		return (int)map(speed, WHEEL_SPEED_MIN, WHEEL_SPEED_MAX, 1000, 2000); // 1500 is middle for writeMicroseconds
 	}
 
   // http://forum.arduino.cc/index.php?topic=524993.5
@@ -57,6 +57,7 @@ private:
    */
   float readPos(int pwmPin)
   {
+   Serial.print("Wheel - Starting readPos()\n");
    int tHigh;
    int tLow;
    int tCycle;
@@ -77,6 +78,7 @@ private:
   
    dc = (dutyScale * tHigh) / tCycle;
    theta = ((dc - dcMin) * unitsFC) / (dcMax - dcMin);
+   Serial.print("Wheel - Finished readPos()\n");
    return theta;
   }
 
@@ -99,8 +101,8 @@ public:
    */
 	Wheel *
 	setSpeed(int speed) {
-		_speed = mapSpeed(speed);
-		_wheel.write(_speed);
+		_speed = speed;
+		_wheel.writeMicroseconds(mapSpeed(_speed));
 		return this;
 	}
 
@@ -118,7 +120,7 @@ public:
 		_current_rev = 0;
     _current_angle = 0;
 		_wheel.write(mapSpeed(0));
-    _start_angle = readPos(_feedback_pin);
+    //_start_angle = readPos(_feedback_pin);
 		return this;
 	}
 
