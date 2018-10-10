@@ -34,7 +34,14 @@ public:
   }
   
   void initialise() {
+    Serial.println("Initialising Lift_Time_Command\n");
     _time = millis() + _time;	// _time is now the end time.
+    
+    Serial.print("Lift_Time_Command with ");
+    Serial.print(_dir);
+    Serial.print("  ");
+    Serial.print(_speed);
+    Serial.println("");
   }
 
   bool execute() {
