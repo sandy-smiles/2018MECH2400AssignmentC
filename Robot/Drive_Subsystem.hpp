@@ -88,6 +88,7 @@ public:
    */
 	void
 	drive(Direction dir, int speed) {
+    bool debug = true;
     speed = abs(speed); // If everything is around the wrong way, please uncomment this line.
 
     /*
@@ -102,46 +103,40 @@ public:
     drt_speed = speedControl(ghost_angle, drt_angle, abs(drt_speed));
     drb_speed = speedControl(ghost_angle, drb_angle, abs(drb_speed));
     */
-    dlt_speed = speed;
-    dlb_speed = speed;
-    drt_speed = speed;
-    drb_speed = speed;
     
 		switch(dir) {
 		case left:
-      _dlt->setSpeed(-dlt_speed);
-      _dlb->setSpeed(dlb_speed);
-      _drt->setSpeed(-drt_speed);
-      _drb->setSpeed(drb_speed);
+      if (debug) Serial.println("Going left.");
+      speed = -speed;
 		case right:
-			_dlt->setSpeed(dlt_speed);
-			_dlb->setSpeed(-dlb_speed);
-			_drt->setSpeed(drt_speed);
-			_drb->setSpeed(-drb_speed);
+      if (debug) Serial.println("Going right.");
+			_dlt->setSpeed(speed);
+			_dlb->setSpeed(-speed);
+			_drt->setSpeed(speed);
+			_drb->setSpeed(-speed);
 			break;
 		case backwards:
-      _dlt->setSpeed(-dlt_speed);
-      _dlb->setSpeed(-dlb_speed);
-      _drt->setSpeed(drt_speed);
-      _drb->setSpeed(drb_speed);
+      speed = -speed;
+      if (debug) Serial.println("Going backwards.");
 		case forwards:
-			_dlt->setSpeed(dlt_speed);
+      if (debug) Serial.println("Going forwards.");
+			_dlt->sM(dlt_speed);
 			_dlb->setSpeed(dlb_speed);
 			_drt->setSpeed(-drt_speed);
 			_drb->setSpeed(-drb_speed);
 			break;
     case turn_left:
-      _dlt->setSpeed(-dlt_speed);
-      _dlb->setSpeed(-dlb_speed);
-      _drt->setSpeed(-drt_speed);
-      _drb->setSpeed(-drb_speed);
+      speed = -speed;
+      if (debug) Serial.println("Going turn_left.");
     case turn_right:
+      if (debug) Serial.println("Going turn_right.");
       _dlt->setSpeed(dlt_speed);
       _dlb->setSpeed(dlb_speed);
       _drt->setSpeed(drt_speed);
       _drb->setSpeed(drb_speed);
       break;
 		case drive_stop:
+      if (debug) Serial.println("Set drive_stop.");
 			_dlt->setSpeed(0);
 			_dlb->setSpeed(0);
 			_drt->setSpeed(0);

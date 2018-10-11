@@ -6,7 +6,7 @@
 #include "Wheel.hpp"
 #include "Drive_Subsystem.hpp"
 #include "Lift_Subsystem.hpp"
-#include "Drive_Distance_Command.hpp"
+//#include "Drive_Distance_Command.hpp"
 #include "Drive_Sensor_Command.hpp"
 #include "Drive_Time_Command.hpp"
 #include "Drive_Time_Sensor_Command.hpp"
@@ -31,12 +31,13 @@ int dlt_control = 9;
 int dlb_control = 10;
 int drt_control = 11;
 int drb_control = 12;
-// Define wheel feedback pins 
+/*// Define wheel feedback pins 
 // NOTE: Sre not using these due to type of servos.
 int dlt_feedback = 3;
 int dlb_feedback = 2;
 int drt_feedback = 5;
 int drb_feedback = 6;
+*/
 
 // Define Lift Subsystem
 Lift_Subsystem *liftSubsystem;
@@ -63,10 +64,10 @@ void setup() {
   Serial.println("Lift System Initialised");
   
   Serial.println("Initialising Drive Wheels");
-  dlt = new Wheel(dlt_control, dlt_feedback);
-  dlb = new Wheel(dlb_control, dlb_feedback);
-  drt = new Wheel(drt_control, drt_feedback);
-  drb = new Wheel(drb_control, drb_feedback);
+  dlt = new Wheel(dlt_control); //, dlt_feedback);
+  dlb = new Wheel(dlb_control); //, dlb_feedback);
+  drt = new Wheel(drt_control); //, drt_feedback);
+  drb = new Wheel(drb_control); //, drb_feedback);
   Serial.println("Initialising Drive_Subsystem");
   driveSubsystem = new Drive_Subsystem(dlt, dlb, drt, drb);
   Serial.println("Drive System Initialised");
@@ -74,7 +75,7 @@ void setup() {
   cmds = new RobotRunner();     // create an execution environment
 
   // Define all of the commands before structuring it into a command tree.
-   //Lift Program
+  /* //Lift Program
   Lift_Direction _dir = up;
   int _s = 75;
   Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED);
@@ -93,7 +94,7 @@ void setup() {
   Lift_Time_Command *cmd13 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s );
   Lift_Sensor_Command *cmd14 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel down
   Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
-    
+  */  
   
   /* //Parallel Program
   int _s = 1000;
@@ -105,13 +106,19 @@ void setup() {
   Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
   */
   
+   //Parallel Drive Program
+  Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED);
+  Drive_Time_Sensor_Command *para1 = new Drive_Time_Sensor_Command(driveSubsystem, forwards, 20000, start_pin, SENSOR_PRESSED, 80);
+  Drive_Time_Command *driveStopCommand = new Drive_Time_Command(driveSubsystem, drive_stop, 10000, 0);
+  
+  
 //RobotFlashLed *rfl = new RobotFlashLed(new SubsystemLED(led1), 500);
 //rfl->addParallel(new RobotFlashLed(new SubsystemLED(led2), 300));
 
   
   // When creating commands, you want to create the structure of a massive tree that can branch into two.
   // Build up command tree from the first command.
-   //Lift Program
+  /* //Lift Program
   startCommand->addSequential(cmd01);
   cmd01->addSequential(cmd02);
   cmd02->addSequential(cmd03);
@@ -127,7 +134,7 @@ void setup() {
   cmd12->addSequential(cmd13);
   cmd13->addSequential(cmd14);
   cmd14->addSequential(liftStopCommand);
-  
+  */
   
   /* //Parallel Program
   startCommand->addSequential(cmd01);
@@ -136,6 +143,13 @@ void setup() {
   cmd01->addSequential(driveStopCommand);
   cmd04->addSequential(liftStopCommand);
   */
+  
+    //Parallel Drive Program
+  startCommand->addSequential(para1);
+  //para1->addParallel(para2);
+  para1->addSequential(driveStopCommand);
+  //para2->addSequential(driveStopCommand2);
+  
 
 // Start on limit switch press/trigger
 // Drive forwards for a little bit

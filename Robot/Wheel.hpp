@@ -16,8 +16,8 @@
 
 #include <Servo.h>
 
-#define WHEEL_SPEED_MAX 1000
-#define WHEEL_SPEED_MIN -1000
+#define WHEEL_SPEED_MAX 90
+#define WHEEL_SPEED_MIN -90
 #define REV_DEGREES 360
 
 class Wheel {
@@ -25,11 +25,11 @@ private:
 	Servo _wheel;
 	int _speed;
 	int _control_pin;
-	int _feedback_pin;
-  int _start_angle = 0;
-	int _current_pos;
-	int _current_rev;
-  int _current_angle;
+	//int _feedback_pin;
+  //int _start_angle = 0;
+	//int _current_pos;
+	//int _current_rev;
+  //int _current_angle;
 
   // mapSpeed
   /*
@@ -45,7 +45,7 @@ private:
 		} else if (speed < WHEEL_SPEED_MIN) {
 			speed = WHEEL_SPEED_MIN;
 		}
-		return (int)map(speed, WHEEL_SPEED_MIN, WHEEL_SPEED_MAX, 1000, 2000); // 1500 is middle for writeMicroseconds
+		return (int)map(speed, WHEEL_SPEED_MIN, WHEEL_SPEED_MAX, 0, 180); // 1500 is middle for writeMicroseconds, 90 for write
 	}
 
   // http://forum.arduino.cc/index.php?topic=524993.5
@@ -83,11 +83,11 @@ private:
   }
 
 public:
-	Wheel(int control_pin, int feedback_pin) {
+	Wheel(int control_pin) {//, int feedback_pin) {
 		_control_pin = control_pin;
-		_feedback_pin = feedback_pin;
+		//_feedback_pin = feedback_pin;
 		pinMode(_control_pin, OUTPUT);
-		pinMode(_feedback_pin, INPUT);
+		//pinMode(_feedback_pin, INPUT);
 		_wheel.attach(_control_pin);
 		_wheel.write(mapSpeed(0));
 	}
@@ -102,7 +102,8 @@ public:
 	Wheel *
 	setSpeed(int speed) {
 		_speed = speed;
-		_wheel.writeMicroseconds(mapSpeed(_speed));
+		//_wheel.writeMicroseconds(mapSpeed(_speed));
+    _wheel.write(mapSpeed(_speed));
 		return this;
 	}
 
@@ -116,9 +117,9 @@ public:
 	Wheel *
 	reset() {
 		_speed = 0;
-		_current_pos = 0;
-		_current_rev = 0;
-    _current_angle = 0;
+		//_current_pos = 0;
+		//_current_rev = 0;
+    //_current_angle = 0;
 		_wheel.write(mapSpeed(0));
     //_start_angle = readPos(_feedback_pin);
 		return this;
@@ -130,12 +131,12 @@ public:
    *  - None
    * Output:
    *  - Current position within the revolution (angle)
-   */
 	int
 	getCurrentPos() {
     _current_pos = getCurrentRev()*REV_DEGREES+_current_angle;
 		return _current_pos;
 	}
+   */
 
   // getCurrentRev
   /*
@@ -143,7 +144,6 @@ public:
    *  - None
    * Output:
    *  - Current revolution
-   */
 	int
 	getCurrentRev() {
     int angle = _current_angle;
@@ -154,6 +154,7 @@ public:
     }
 		return _current_rev;
 	}
+   */
 
   // getCurrentAngle
   /*
@@ -161,13 +162,13 @@ public:
    *  - None
    * Output:
    *  - Current Angle within revolution
-   */
   int
   getCurrentAngle() {
     int angle = readPos(_feedback_pin);
     _current_angle = (angle-_start_angle+REV_DEGREES)%REV_DEGREES;
     return _current_angle;
   }
+   */
  
 };
 
