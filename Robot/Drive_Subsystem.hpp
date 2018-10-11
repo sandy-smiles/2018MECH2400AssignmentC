@@ -120,20 +120,20 @@ public:
       if (debug) Serial.println("Going backwards.");
 		case forwards:
       if (debug) Serial.println("Going forwards.");
-			_dlt->sM(dlt_speed);
-			_dlb->setSpeed(dlb_speed);
-			_drt->setSpeed(-drt_speed);
-			_drb->setSpeed(-drb_speed);
+			_dlt->setSpeed(speed);
+			_dlb->setSpeed(speed);
+			_drt->setSpeed(-speed);
+			_drb->setSpeed(-speed);
 			break;
     case turn_left:
       speed = -speed;
       if (debug) Serial.println("Going turn_left.");
     case turn_right:
       if (debug) Serial.println("Going turn_right.");
-      _dlt->setSpeed(dlt_speed);
-      _dlb->setSpeed(dlb_speed);
-      _drt->setSpeed(drt_speed);
-      _drb->setSpeed(drb_speed);
+      _dlt->setSpeed(speed);
+      _dlb->setSpeed(speed);
+      _drt->setSpeed(speed);
+      _drb->setSpeed(speed);
       break;
 		case drive_stop:
       if (debug) Serial.println("Set drive_stop.");
