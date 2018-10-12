@@ -84,81 +84,30 @@ void setup() {
   // When creating commands, you want to create the structure of a massive tree that can branch into two.
   // Build up command tree from the first command.
   
-  /* //Lift Program
-  Lift_Direction _dir = up;
-  int _s = 75;
-  Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED);
-  Lift_Time_Command *cmd01 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s);
-  Lift_Sensor_Command *cmd02 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel up
-  Lift_Time_Command *cmd03 = new Lift_Time_Command(liftSubsystem, lift_stop, 500, 0);
-  Lift_Sensor_Command *cmd04 = new Lift_Sensor_Command(liftSubsystem, lift_stop, start_pin, SENSOR_PRESSED, 0); // Stop lifts
-  Lift_Time_Command *cmd05 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s);
-  Lift_Sensor_Command *cmd06 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel down
-  Lift_Time_Command *cmd07 = new Lift_Time_Command(liftSubsystem, lift_stop, 500, 0);
-  Lift_Sensor_Command *cmd08 = new Lift_Sensor_Command(liftSubsystem, lift_stop, start_pin, SENSOR_PRESSED, 0); // Stop lifts
-  Lift_Time_Command *cmd09 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s);
-  Lift_Sensor_Command *cmd10 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel down
-  Lift_Time_Command *cmd11 = new Lift_Time_Command(liftSubsystem, lift_stop, 500, 0);
-  Lift_Sensor_Command *cmd12 = new Lift_Sensor_Command(liftSubsystem, lift_stop, start_pin, SENSOR_PRESSED, 0); // Stop lifts
-  Lift_Time_Command *cmd13 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s );
-  Lift_Sensor_Command *cmd14 = new Lift_Sensor_Command(liftSubsystem, _dir, start_pin, SENSOR_PRESSED, _s); // Make lift travel down
-  Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
-  
-  startCommand->addSequential(cmd01);
-  cmd01->addSequential(cmd02);
-  cmd02->addSequential(cmd03);
-  cmd03->addSequential(cmd04);
-  cmd04->addSequential(cmd05);
-  cmd05->addSequential(cmd06);
-  cmd06->addSequential(cmd07);
-  cmd07->addSequential(cmd08);
-  cmd08->addSequential(cmd09);
-  cmd09->addSequential(cmd10);
-  cmd10->addSequential(cmd11);
-  cmd11->addSequential(cmd12);
-  cmd12->addSequential(cmd13);
-  cmd13->addSequential(cmd14);
-  cmd14->addSequential(liftStopCommand);
-  */
-  
-  /* //Parallel Program
-  int _s = 1000;
-  Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED);
-  Drive_Time_Command *cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 5000, _s);
-  Lift_Time_Command *cmd03 = new Lift_Time_Command(liftSubsystem, up, 2000, _s);
-  Lift_Sensor_Command *cmd04 = new Lift_Sensor_Command(liftSubsystem, up, start_pin, SENSOR_PRESSED, _s);
-  Drive_Time_Command *driveStopCommand = new Drive_Time_Command(driveSubsystem, drive_stop, 10000, 0);
-  Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
-  
-  startCommand->addSequential(cmd01);
-  cmd01->addParallel(cmd03);
-  cmd03->addSequential(cmd04);
-  cmd01->addSequential(driveStopCommand);
-  cmd04->addSequential(liftStopCommand);
-  */
-  
    //Robot main Program
   Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED); // Press Start
-  Drive_Time_Command *drive_cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 20000, 90); // Move forwards 650mm
-  Drive_Time_Command *drive_cmd02 = new Drive_Time_Command(driveSubsystem, turn_left, 1500, 90); // Rotate 90 anti-clockwise
-  Lift_Time_Command *lift_cmd01 = new Lift_Time_Command(liftSubsystem, up, 10000, 90); // Lift up (min 100mm)
+  Drive_Time_Command *drive_cmd01 = new Drive_Time_Command(driveSubsystem, forwards, 4300, 15); // Move forwards 650mm
+  Drive_Time_Command *drive_cmd02 = new Drive_Time_Command(driveSubsystem, turn_left, 2350, 15); // Rotate 90 anti-clockwise
+  Lift_Time_Command *lift_cmd01 = new Lift_Time_Command(liftSubsystem, up, 2000, 90); // Lift up (min 100mm)
   Lift_Time_Command *lift_cmd02 = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0); // Stop the lift
-  Drive_Time_Command *drive_cmd03 = new Drive_Time_Command(driveSubsystem, fowards, 8000, 90); // Move forward 250mm
-  Drive_Time_Sensor_Command *drive_cmd04 = new Drive_Time_Sensor_Command(driveSubsystem, left, 8000, start_pin, SENSOR_PRESSED, 90); // Move left until left sensor hits
-  Drive_Time_Command *drive_cmd05 = new Drive_Time_Command(driveSubsystem, right, 8000, 90);// Move right 69.5mm
-  Drive_Time_Sensor_Command *drive_cmd06 = new Drive_Time_Sensor_Command(driveSubsystem, forwards, 8000, front1_pin, SENSOR_PRESSED, 90); // Move forwards until front sensor hits
-  Lift_Time_Command *lift_cmd03 = new Lift_Time_Command(liftSubsystem, up, 5000, 90); // Lift up until max
+  Drive_Time_Command *drive_cmd03 = new Drive_Time_Command(driveSubsystem, forwards, 1950, 15); // Move forward 250mm
+  Drive_Time_Sensor_Command *drive_cmd04 = new Drive_Time_Sensor_Command(driveSubsystem, left, 2000, left_pin, SENSOR_PRESSED, 15); // Move left until left sensor hits
+  Drive_Time_Command *drive_cmd05 = new Drive_Time_Command(driveSubsystem, right, 600, 15);// Move right 69.5mm
+  Drive_Time_Sensor_Command *drive_cmd06 = new Drive_Time_Sensor_Command(driveSubsystem, forwards, 2000, right_pin, SENSOR_PRESSED, 15); // Move forwards until front sensor hits
+  Drive_Time_Command *drive_cmd07 = new Drive_Time_Command(driveSubsystem, drive_stop, 20000, 0); //Wheels stop once that front sensor is pressed
+  Lift_Time_Command *lift_cmd03 = new Lift_Time_Command(liftSubsystem, up, 0, 90); // Lift up until max - changed = 1000
   Lift_Time_Command *lift_cmd04 = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0); // Stop the lift
-  Drive_Time_Command *drive_cmd07 = new Drive_Time_Command(driveSubsystem, backwards, 15000, 90); // Move backwards 200mm
-  Drive_Time_Command *drive_cmd08 = new Drive_Time_Command(driveSubsystem, forwards, 20000, 90); // Move right 1231.78mm
-  Lift_Time_Command *lift_cmd05 = new Lift_Time_Command(liftSubsystem, down, 10000, 90); // Lift down (max 150mm from base)
+  Drive_Time_Command *drive_cmd08 = new Drive_Time_Command(driveSubsystem, backwards, 1900, 15); // Move backwards 200mm
+  Drive_Time_Command *drive_cmd09 = new Drive_Time_Command(driveSubsystem, right, 10654, 15); // Move right 1231.78mm
+  Lift_Time_Command *lift_cmd05 = new Lift_Time_Command(liftSubsystem, down, 9000, 90); // Lift down (max 150mm from base) = 9000
   Lift_Time_Command *lift_cmd06 = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0); // Stop the lift
-  Drive_Time_Command *drive_cmd09 = new Drive_Time_Command(driveSubsystem, turn_right, 3000, 90); // Rotate 180 clockwise
-  Drive_Time_Sensor_Command *drive_cmd10 = new Drive_Time_Sensor_Command(driveSubsystem, forwards, 8000, front2_pin, SENSOR_PRESSED, 90); // Move forwards until front sensor hits
-  Drive_Time_Sensor_Command *drive_cmd11 = new Drive_Time_Sensor_Command(driveSubsystem, right, 8000, right_pin, !SENSOR_PRESSED, 90); // Move right until right sensor de-activates
-  Drive_Time_Command *drive_cmd12 = new Drive_Time_Command(driveSubsystem, left, 20000, 90); // Move left 196mm
-  Lift_Time_Command *lift_cmd07 = new Lift_Time_Command(liftSubsystem, down, 10000, 90); // Lift down (all the way)
-    
+  Drive_Time_Command *drive_cmd10 = new Drive_Time_Command(driveSubsystem, turn_right, 5300 , 15); // Rotate 180 clockwise
+  Drive_Time_Sensor_Command *drive_cmd11 = new Drive_Time_Sensor_Command(driveSubsystem, forwards, 2000, front1_pin, SENSOR_PRESSED, 15); // Move forwards until front sensor hits
+  Drive_Time_Sensor_Command *drive_cmd12 = new Drive_Time_Sensor_Command(driveSubsystem, forwards, 2000, front2_pin, SENSOR_PRESSED, 15); //Move forwards until other front sensor hits
+  Drive_Time_Sensor_Command *drive_cmd13 = new Drive_Time_Sensor_Command(driveSubsystem, right, 2000, front2_pin, !SENSOR_PRESSED, 15); // Move right until right sensor de-activates
+  Drive_Time_Command *drive_cmd14 = new Drive_Time_Command(driveSubsystem, left, 3468, 15); // Move left 196mm
+  Lift_Time_Command *lift_cmd07 = new Lift_Time_Command(liftSubsystem, down, 8000, 90); // Lift down (all the way)
+   
   Drive_Time_Command *driveStopCommand = new Drive_Time_Command(driveSubsystem, drive_stop, 10000, 0);
   Lift_Time_Command *liftStopCommand = new Lift_Time_Command(liftSubsystem, lift_stop, 10000, 0);
   
@@ -175,20 +124,21 @@ void setup() {
 
   drive_cmd06->addParallel(lift_cmd03);
   lift_cmd03->addSequential(lift_cmd04);
-  
   drive_cmd06->addSequential(drive_cmd07);
   drive_cmd07->addSequential(drive_cmd08);
+  drive_cmd08->addSequential(drive_cmd09);
   
-  drive_cmd08->addParallel(lift_cmd05);
+  drive_cmd09->addParallel(lift_cmd05);
   lift_cmd05->addSequential(lift_cmd06);
   
-  drive_cmd08->addSequential(drive_cmd09);
   drive_cmd09->addSequential(drive_cmd10);
   drive_cmd10->addSequential(drive_cmd11);
   drive_cmd11->addSequential(drive_cmd12);
-  drive_cmd12->addSequential(driveStopCommand);
+  drive_cmd12->addSequential(drive_cmd13);
+  drive_cmd13->addSequential(drive_cmd14);
+  drive_cmd14->addSequential(driveStopCommand);
   
-  drive_cmd12->addParallel(lift_cmd07)
+  drive_cmd14->addParallel(lift_cmd07);
   lift_cmd07->addSequential(liftStopCommand);
   
   // After commands, then add all of the command tree to register to run.
