@@ -75,7 +75,7 @@ void setup() {
 
   // Define all of the commands before structuring it into a command tree.
   //Lift Program
-  Lift_Direction _dir = up;
+  Lift_Direction _dir = down;
   int _s = 75;
   Sensor_Command *startCommand = new Sensor_Command(start_pin, SENSOR_PRESSED)  ;
   Lift_Time_Command *cmd01 = new Lift_Time_Command(liftSubsystem, _dir, 500, _s);
