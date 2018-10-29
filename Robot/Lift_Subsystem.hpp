@@ -7,6 +7,8 @@
  *  - Lift_Subsystem
  *    - void reset
  *    - void move
+ * Notes:
+ *  - Different servo speeds where 0 is full speed up, 90 is stopped, and 180 is full speed down
  * 
  * TODO:
  *  - Fix up within move, the function that pokes the servos to spin.
@@ -63,7 +65,7 @@ public:
 			_m1->setSpeed(speed);
 			_m2->setSpeed(-speed); // Depend on wiring as to whether this is -speed or +speed
 			break;
-		case stop:
+		case lift_stop:
 			_m1->setSpeed(0);
 			_m2->setSpeed(0);
 			break;	

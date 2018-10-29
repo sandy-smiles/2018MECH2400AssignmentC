@@ -1,4 +1,4 @@
-// Lift_Sensor_Command
+// Lift_Time_Sensor_Command
 /*
  * Allows the robot to move the lift in the specified direction funtil a specified sensor is pressed.
  * 
@@ -20,32 +20,36 @@
 
 // #define SENSOR_PRESSED 0
 
-class Lift_Sensor_Command: public RobotCmd {
+class Lift_Time_Sensor_Command: public RobotCmd {
 private:
   Lift_Subsystem *_lift;
   Lift_Direction _dir;
+  unsigned long _time;
   int _sensor_pin;
   bool _sensor_state;
   int _speed;
 
 public:
-  Lift_Sensor_Command(Lift_Subsystem *lift, Lift_Direction dir, int sensor_pin, bool sensor_state, int speed) {
+  Lift_Time_Sensor_Command(Lift_Subsystem *lift, Lift_Direction dir, unsigned long time, int sensor_pin, bool sensor_state, int speed) {
     _lift = lift;
     _dir = dir;
+    _time = time;
     _sensor_pin = sensor_pin;
     _sensor_state = sensor_state;
     _speed = speed;
   }
   
   void initialise() {
-    Serial.println("Initialising Lift_Sensor_Command\n");
+    Serial.println("Initialising Lift_Time_Sensor_Command\n");
+    _time = millis() + _time;	// _time is now the end time.
     pinMode(_sensor_pin, INPUT_PULLUP);	// Use the pin's internal pull up resistor.
   }
 
   bool execute() {
+    unsigned long curTime = millis();
   	bool sensed = digitalRead(_sensor_pin);
 
-    if (sensed == _sensor_state) {
+    if (curTime > _time && sensed == _sensor_state) {
       return true; // End the Command
     }
 
